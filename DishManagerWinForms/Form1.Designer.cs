@@ -28,63 +28,89 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
-            dataGridView1 = new DataGridView();
-            dishBindingSource = new BindingSource(components);
-            nameDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            recipeDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)dishBindingSource).BeginInit();
+            TabPageDishes = new TabControl();
+            tabPage1 = new TabPage();
+            tabPage2 = new TabPage();
+            ShowIngredients = new DataGridView();
+            ShowDishes = new DataGridView();
+            TabPageDishes.SuspendLayout();
+            tabPage1.SuspendLayout();
+            tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)ShowIngredients).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ShowDishes).BeginInit();
             SuspendLayout();
             // 
-            // dataGridView1
+            // TabPageDishes
             // 
-            dataGridView1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            dataGridView1.AutoGenerateColumns = false;
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { nameDataGridViewTextBoxColumn, recipeDataGridViewTextBoxColumn });
-            dataGridView1.DataSource = dishBindingSource;
-            dataGridView1.Location = new Point(12, 12);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.Size = new Size(776, 426);
-            dataGridView1.TabIndex = 0;
+            TabPageDishes.Controls.Add(tabPage1);
+            TabPageDishes.Controls.Add(tabPage2);
+            TabPageDishes.Location = new Point(12, 12);
+            TabPageDishes.Name = "TabPageDishes";
+            TabPageDishes.SelectedIndex = 0;
+            TabPageDishes.Size = new Size(776, 426);
+            TabPageDishes.TabIndex = 0;
             // 
-            // dishBindingSource
+            // tabPage1
             // 
-            dishBindingSource.DataSource = typeof(DishManagerLibrary.Dish);
+            tabPage1.Controls.Add(ShowDishes);
+            tabPage1.Location = new Point(4, 24);
+            tabPage1.Name = "tabPage1";
+            tabPage1.Padding = new Padding(3);
+            tabPage1.Size = new Size(768, 398);
+            tabPage1.TabIndex = 0;
+            tabPage1.Text = "tabPage1";
+            tabPage1.UseVisualStyleBackColor = true;
             // 
-            // nameDataGridViewTextBoxColumn
+            // tabPage2
             // 
-            nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
-            nameDataGridViewTextBoxColumn.HeaderText = "Name";
-            nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
-            nameDataGridViewTextBoxColumn.Width = 250;
+            tabPage2.Controls.Add(ShowIngredients);
+            tabPage2.Location = new Point(4, 24);
+            tabPage2.Name = "tabPage2";
+            tabPage2.Padding = new Padding(3);
+            tabPage2.Size = new Size(768, 398);
+            tabPage2.TabIndex = 1;
+            tabPage2.Text = "tabPage2";
+            tabPage2.UseVisualStyleBackColor = true;
             // 
-            // recipeDataGridViewTextBoxColumn
+            // ShowIngredients
             // 
-            recipeDataGridViewTextBoxColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            recipeDataGridViewTextBoxColumn.DataPropertyName = "Recipe";
-            recipeDataGridViewTextBoxColumn.HeaderText = "Recipe";
-            recipeDataGridViewTextBoxColumn.Name = "recipeDataGridViewTextBoxColumn";
+            ShowIngredients.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            ShowIngredients.Dock = DockStyle.Fill;
+            ShowIngredients.Location = new Point(3, 3);
+            ShowIngredients.Name = "ShowIngredients";
+            ShowIngredients.Size = new Size(762, 392);
+            ShowIngredients.TabIndex = 0;
+            // 
+            // ShowDishes
+            // 
+            ShowDishes.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            ShowDishes.Dock = DockStyle.Fill;
+            ShowDishes.Location = new Point(3, 3);
+            ShowDishes.Name = "ShowDishes";
+            ShowDishes.Size = new Size(762, 392);
+            ShowDishes.TabIndex = 0;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
-            Controls.Add(dataGridView1);
+            Controls.Add(TabPageDishes);
             Name = "Form1";
             Text = "DishManager";
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)dishBindingSource).EndInit();
+            TabPageDishes.ResumeLayout(false);
+            tabPage1.ResumeLayout(false);
+            tabPage2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)ShowIngredients).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ShowDishes).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
-
-        private DataGridView dataGridView1;
-        private BindingSource dishBindingSource;
-        private DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn recipeDataGridViewTextBoxColumn;
+        private TabControl TabPageDishes;
+        private TabPage tabPage1;
+        private TabPage tabPage2;
+        private DataGridView ShowIngredients;
+        private DataGridView ShowDishes;
     }
 }
