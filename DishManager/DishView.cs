@@ -8,7 +8,7 @@ namespace DishManagerLibrary
 {
     public class DishView
     {
-        public string Name { get; set; }
+        public required string Name { get; set; }
         public string? Recipe { get; set; }
         public string? IngredientsAsString { get; set; }
 
@@ -19,7 +19,7 @@ namespace DishManagerLibrary
             {
                 Name = d.Name,
                 Recipe = d.Recipe,
-                IngredientsAsString = string.Join(", ", d.Dependencies.Select(i => i.Name))
+                IngredientsAsString = string.Join(", ", d.Dependencies?.Select(i => i.Name) ?? Enumerable.Empty<string>())
             }).ToList();
         }
     }

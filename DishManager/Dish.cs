@@ -10,7 +10,7 @@ namespace DishManagerLibrary
     {
         public static List<Dish> DishList { get; } = new List<Dish>();
 
-        public string Name { get; set; }
+        public required string Name { get; set; }
         public string? Recipe { get; set; }
         public List<Ingredient>? Dependencies { get; set; } = new List<Ingredient>();
 

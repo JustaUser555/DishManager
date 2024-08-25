@@ -1,6 +1,6 @@
 ﻿namespace DishManagerWF
 {
-    partial class Form1
+    partial class MainWindow
     {
         /// <summary>
         ///  Required designer variable.
@@ -29,36 +29,37 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            tabControl1 = new TabControl();
+            tabControl = new TabControl();
             DishTabPage = new TabPage();
-            IngredientsTabPage = new TabPage();
             DataGridDishes = new DataGridView();
+            DishNameColumn = new DataGridViewTextBoxColumn();
+            DishRecipeColumn = new DataGridViewTextBoxColumn();
+            DishIngredientsColumn = new DataGridViewTextBoxColumn();
             dishViewBindingSource = new BindingSource(components);
-            nameDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            recipeDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            ingredientsAsStringDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            IngredientsTabPage = new TabPage();
             DataGridIngredients = new DataGridView();
+            IngredientsNameColumn = new DataGridViewTextBoxColumn();
             ingredientBindingSource = new BindingSource(components);
-            nameDataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
             ButtonToSaveChanges = new Button();
-            tabControl1.SuspendLayout();
+            tabControl.SuspendLayout();
             DishTabPage.SuspendLayout();
-            IngredientsTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)DataGridDishes).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dishViewBindingSource).BeginInit();
+            IngredientsTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)DataGridIngredients).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ingredientBindingSource).BeginInit();
             SuspendLayout();
             // 
-            // tabControl1
+            // tabControl
             // 
-            tabControl1.Controls.Add(DishTabPage);
-            tabControl1.Controls.Add(IngredientsTabPage);
-            tabControl1.Location = new Point(0, 3);
-            tabControl1.Name = "tabControl1";
-            tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(800, 409);
-            tabControl1.TabIndex = 0;
+            tabControl.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            tabControl.Controls.Add(DishTabPage);
+            tabControl.Controls.Add(IngredientsTabPage);
+            tabControl.Location = new Point(0, 3);
+            tabControl.Name = "tabControl";
+            tabControl.SelectedIndex = 0;
+            tabControl.Size = new Size(800, 409);
+            tabControl.TabIndex = 0;
             // 
             // DishTabPage
             // 
@@ -66,10 +67,50 @@
             DishTabPage.Location = new Point(4, 24);
             DishTabPage.Name = "DishTabPage";
             DishTabPage.Padding = new Padding(3);
-            DishTabPage.Size = new Size(792, 422);
+            DishTabPage.Size = new Size(792, 381);
             DishTabPage.TabIndex = 0;
             DishTabPage.Text = "Dishes";
             DishTabPage.UseVisualStyleBackColor = true;
+            // 
+            // DataGridDishes
+            // 
+            DataGridDishes.AllowUserToAddRows = false;
+            DataGridDishes.AllowUserToDeleteRows = false;
+            DataGridDishes.AutoGenerateColumns = false;
+            DataGridDishes.ClipboardCopyMode = DataGridViewClipboardCopyMode.Disable;
+            DataGridDishes.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            DataGridDishes.Columns.AddRange(new DataGridViewColumn[] { DishNameColumn, DishRecipeColumn, DishIngredientsColumn });
+            DataGridDishes.DataSource = dishViewBindingSource;
+            DataGridDishes.Dock = DockStyle.Fill;
+            DataGridDishes.Location = new Point(3, 3);
+            DataGridDishes.Name = "DataGridDishes";
+            DataGridDishes.Size = new Size(786, 375);
+            DataGridDishes.TabIndex = 0;
+            // 
+            // DishNameColumn
+            // 
+            DishNameColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            DishNameColumn.DataPropertyName = "Name";
+            DishNameColumn.HeaderText = "Name";
+            DishNameColumn.Name = "DishNameColumn";
+            // 
+            // DishRecipeColumn
+            // 
+            DishRecipeColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            DishRecipeColumn.DataPropertyName = "Recipe";
+            DishRecipeColumn.HeaderText = "Recipe";
+            DishRecipeColumn.Name = "DishRecipeColumn";
+            // 
+            // DishIngredientsColumn
+            // 
+            DishIngredientsColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            DishIngredientsColumn.DataPropertyName = "IngredientsAsString";
+            DishIngredientsColumn.HeaderText = "IngredientsAsString";
+            DishIngredientsColumn.Name = "DishIngredientsColumn";
+            // 
+            // dishViewBindingSource
+            // 
+            dishViewBindingSource.DataSource = typeof(DishManagerLibrary.DishView);
             // 
             // IngredientsTabPage
             // 
@@ -82,51 +123,11 @@
             IngredientsTabPage.Text = "Ingredients";
             IngredientsTabPage.UseVisualStyleBackColor = true;
             // 
-            // DataGridDishes
-            // 
-            DataGridDishes.AllowUserToAddRows = false;
-            DataGridDishes.AllowUserToDeleteRows = false;
-            DataGridDishes.AutoGenerateColumns = false;
-            DataGridDishes.ClipboardCopyMode = DataGridViewClipboardCopyMode.Disable;
-            DataGridDishes.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            DataGridDishes.Columns.AddRange(new DataGridViewColumn[] { nameDataGridViewTextBoxColumn, recipeDataGridViewTextBoxColumn, ingredientsAsStringDataGridViewTextBoxColumn });
-            DataGridDishes.DataSource = dishViewBindingSource;
-            DataGridDishes.Dock = DockStyle.Fill;
-            DataGridDishes.Location = new Point(3, 3);
-            DataGridDishes.Name = "DataGridDishes";
-            DataGridDishes.Size = new Size(786, 416);
-            DataGridDishes.TabIndex = 0;
-            // 
-            // dishViewBindingSource
-            // 
-            dishViewBindingSource.DataSource = typeof(DishManagerLibrary.DishView);
-            // 
-            // nameDataGridViewTextBoxColumn
-            // 
-            nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
-            nameDataGridViewTextBoxColumn.HeaderText = "Name";
-            nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
-            nameDataGridViewTextBoxColumn.Width = 250;
-            // 
-            // recipeDataGridViewTextBoxColumn
-            // 
-            recipeDataGridViewTextBoxColumn.DataPropertyName = "Recipe";
-            recipeDataGridViewTextBoxColumn.HeaderText = "Recipe";
-            recipeDataGridViewTextBoxColumn.Name = "recipeDataGridViewTextBoxColumn";
-            recipeDataGridViewTextBoxColumn.Width = 249;
-            // 
-            // ingredientsAsStringDataGridViewTextBoxColumn
-            // 
-            ingredientsAsStringDataGridViewTextBoxColumn.DataPropertyName = "IngredientsAsString";
-            ingredientsAsStringDataGridViewTextBoxColumn.HeaderText = "IngredientsAsString";
-            ingredientsAsStringDataGridViewTextBoxColumn.Name = "ingredientsAsStringDataGridViewTextBoxColumn";
-            ingredientsAsStringDataGridViewTextBoxColumn.Width = 250;
-            // 
             // DataGridIngredients
             // 
             DataGridIngredients.AutoGenerateColumns = false;
             DataGridIngredients.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            DataGridIngredients.Columns.AddRange(new DataGridViewColumn[] { nameDataGridViewTextBoxColumn1 });
+            DataGridIngredients.Columns.AddRange(new DataGridViewColumn[] { IngredientsNameColumn });
             DataGridIngredients.DataSource = ingredientBindingSource;
             DataGridIngredients.Dock = DockStyle.Fill;
             DataGridIngredients.Location = new Point(3, 3);
@@ -134,18 +135,20 @@
             DataGridIngredients.Size = new Size(786, 375);
             DataGridIngredients.TabIndex = 0;
             // 
+            // IngredientsNameColumn
+            // 
+            IngredientsNameColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            IngredientsNameColumn.DataPropertyName = "Name";
+            IngredientsNameColumn.HeaderText = "Name";
+            IngredientsNameColumn.Name = "IngredientsNameColumn";
+            // 
             // ingredientBindingSource
             // 
             ingredientBindingSource.DataSource = typeof(DishManagerLibrary.Ingredient);
             // 
-            // nameDataGridViewTextBoxColumn1
-            // 
-            nameDataGridViewTextBoxColumn1.DataPropertyName = "Name";
-            nameDataGridViewTextBoxColumn1.HeaderText = "Name";
-            nameDataGridViewTextBoxColumn1.Name = "nameDataGridViewTextBoxColumn1";
-            // 
             // ButtonToSaveChanges
             // 
+            ButtonToSaveChanges.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             ButtonToSaveChanges.Location = new Point(713, 418);
             ButtonToSaveChanges.Name = "ButtonToSaveChanges";
             ButtonToSaveChanges.Size = new Size(75, 23);
@@ -154,20 +157,20 @@
             ButtonToSaveChanges.UseVisualStyleBackColor = true;
             ButtonToSaveChanges.Click += ButtonToSaveChanges_Click;
             // 
-            // Form1
+            // MainWindow
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
             Controls.Add(ButtonToSaveChanges);
-            Controls.Add(tabControl1);
-            Name = "Form1";
-            Text = "Form1";
-            tabControl1.ResumeLayout(false);
+            Controls.Add(tabControl);
+            Name = "MainWindow";
+            Text = "DishManager";
+            tabControl.ResumeLayout(false);
             DishTabPage.ResumeLayout(false);
-            IngredientsTabPage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)DataGridDishes).EndInit();
             ((System.ComponentModel.ISupportInitialize)dishViewBindingSource).EndInit();
+            IngredientsTabPage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)DataGridIngredients).EndInit();
             ((System.ComponentModel.ISupportInitialize)ingredientBindingSource).EndInit();
             ResumeLayout(false);
@@ -175,16 +178,16 @@
 
         #endregion
 
-        private TabControl tabControl1;
+        private TabControl tabControl;
         private TabPage DishTabPage;
         private TabPage IngredientsTabPage;
         private DataGridView DataGridDishes;
-        private DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn recipeDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn ingredientsAsStringDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn DishNameColumn;
+        private DataGridViewTextBoxColumn DishRecipeColumn;
+        private DataGridViewTextBoxColumn DishIngredientsColumn;
         private BindingSource dishViewBindingSource;
         private DataGridView DataGridIngredients;
-        private DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn1;
+        private DataGridViewTextBoxColumn IngredientsNameColumn;
         private BindingSource ingredientBindingSource;
         private Button ButtonToSaveChanges;
     }
