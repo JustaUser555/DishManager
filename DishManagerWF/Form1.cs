@@ -11,5 +11,10 @@ namespace DishManagerWF
         {
             //make a function that reads and writes to a file (maybe with xml)
         }
+
+        private void AddButton_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -41,6 +41,7 @@
             IngredientsNameColumn = new DataGridViewTextBoxColumn();
             ingredientBindingSource = new BindingSource(components);
             ButtonToSaveChanges = new Button();
+            AddButton = new Button();
             tabControl.SuspendLayout();
             DishTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)DataGridDishes).BeginInit();
@@ -157,11 +158,23 @@
             ButtonToSaveChanges.UseVisualStyleBackColor = true;
             ButtonToSaveChanges.Click += ButtonToSaveChanges_Click;
             // 
+            // AddButton
+            // 
+            AddButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            AddButton.Location = new Point(12, 418);
+            AddButton.Name = "AddButton";
+            AddButton.Size = new Size(75, 23);
+            AddButton.TabIndex = 2;
+            AddButton.Text = "Add";
+            AddButton.UseVisualStyleBackColor = true;
+            AddButton.Click += AddButton_Click;
+            // 
             // MainWindow
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(AddButton);
             Controls.Add(ButtonToSaveChanges);
             Controls.Add(tabControl);
             Name = "MainWindow";
@@ -190,5 +203,6 @@
         private DataGridViewTextBoxColumn IngredientsNameColumn;
         private BindingSource ingredientBindingSource;
         private Button ButtonToSaveChanges;
+        private Button AddButton;
     }
 }

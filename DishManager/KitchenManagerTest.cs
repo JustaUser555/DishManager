@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DishManagerLibrary
 {
-    public static class KitchenManager
+    public static class KitchenManagerTest
     {
         public static void PrintAllDishes()
         {
