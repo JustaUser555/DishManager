@@ -42,6 +42,8 @@
             ingredientBindingSource = new BindingSource(components);
             ButtonToSaveChanges = new Button();
             AddButton = new Button();
+            DeleteButton = new Button();
+            RefreshButton = new Button();
             tabControl.SuspendLayout();
             DishTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)DataGridDishes).BeginInit();
@@ -106,7 +108,7 @@
             // 
             DishIngredientsColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             DishIngredientsColumn.DataPropertyName = "IngredientsAsString";
-            DishIngredientsColumn.HeaderText = "IngredientsAsString";
+            DishIngredientsColumn.HeaderText = "Ingredients";
             DishIngredientsColumn.Name = "DishIngredientsColumn";
             // 
             // dishViewBindingSource
@@ -169,11 +171,35 @@
             AddButton.UseVisualStyleBackColor = true;
             AddButton.Click += AddButton_Click;
             // 
+            // DeleteButton
+            // 
+            DeleteButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            DeleteButton.Location = new Point(93, 418);
+            DeleteButton.Name = "DeleteButton";
+            DeleteButton.Size = new Size(75, 23);
+            DeleteButton.TabIndex = 3;
+            DeleteButton.Text = "Delete";
+            DeleteButton.UseVisualStyleBackColor = true;
+            DeleteButton.Click += DeleteButton_Click;
+            // 
+            // RefreshButton
+            // 
+            RefreshButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            RefreshButton.Location = new Point(174, 418);
+            RefreshButton.Name = "RefreshButton";
+            RefreshButton.Size = new Size(75, 23);
+            RefreshButton.TabIndex = 4;
+            RefreshButton.Text = "Refresh";
+            RefreshButton.UseVisualStyleBackColor = true;
+            RefreshButton.Click += RefreshButton_Click;
+            // 
             // MainWindow
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(RefreshButton);
+            Controls.Add(DeleteButton);
             Controls.Add(AddButton);
             Controls.Add(ButtonToSaveChanges);
             Controls.Add(tabControl);
@@ -195,14 +221,16 @@
         private TabPage DishTabPage;
         private TabPage IngredientsTabPage;
         private DataGridView DataGridDishes;
-        private DataGridViewTextBoxColumn DishNameColumn;
-        private DataGridViewTextBoxColumn DishRecipeColumn;
-        private DataGridViewTextBoxColumn DishIngredientsColumn;
         private BindingSource dishViewBindingSource;
         private DataGridView DataGridIngredients;
         private DataGridViewTextBoxColumn IngredientsNameColumn;
         private BindingSource ingredientBindingSource;
         private Button ButtonToSaveChanges;
         private Button AddButton;
+        private Button DeleteButton;
+        private Button RefreshButton;
+        private DataGridViewTextBoxColumn DishNameColumn;
+        private DataGridViewTextBoxColumn DishRecipeColumn;
+        private DataGridViewTextBoxColumn DishIngredientsColumn;
     }
 }

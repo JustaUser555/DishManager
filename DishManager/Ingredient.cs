@@ -15,5 +15,15 @@ namespace DishManagerLibrary
             Name = name;
             IngredientList.Add(this);
         }
+
+        public static bool RemoveIngredient(Ingredient ingredient)
+        {
+            if (ingredient != null && IngredientList.Contains(ingredient))
+            {
+                IngredientList.Remove(ingredient);
+                return true;
+            }
+            return false;
+        }
     }
 }

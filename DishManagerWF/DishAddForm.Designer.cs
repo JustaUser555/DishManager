@@ -95,6 +95,7 @@
             AddButton.TabIndex = 6;
             AddButton.Text = "Add Dish";
             AddButton.UseVisualStyleBackColor = true;
+            AddButton.Click += AddButton_Click;
             // 
             // DishAddForm
             // 

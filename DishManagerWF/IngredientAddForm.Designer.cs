@@ -36,7 +36,7 @@
             // NameLabel
             // 
             NameLabel.AutoSize = true;
-            NameLabel.Location = new Point(12, 32);
+            NameLabel.Location = new Point(12, 27);
             NameLabel.Name = "NameLabel";
             NameLabel.Size = new Size(39, 15);
             NameLabel.TabIndex = 3;
@@ -44,7 +44,7 @@
             // 
             // NameTextBox
             // 
-            NameTextBox.Location = new Point(93, 32);
+            NameTextBox.Location = new Point(93, 24);
             NameTextBox.Name = "NameTextBox";
             NameTextBox.Size = new Size(279, 23);
             NameTextBox.TabIndex = 4;
@@ -57,6 +57,7 @@
             AddButton.TabIndex = 7;
             AddButton.Text = "Add Ingredient";
             AddButton.UseVisualStyleBackColor = true;
+            AddButton.Click += AddButton_Click;
             // 
             // IngredientAddForm
             // 

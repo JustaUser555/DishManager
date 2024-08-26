@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DishManagerLibrary;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,9 +13,24 @@ namespace DishManagerWF
 {
     public partial class DishAddForm : Form
     {
-        public DishAddForm()
+        private MainWindow MainForm;
+        public DishAddForm(MainWindow form)
         {
             InitializeComponent();
+            MainForm = form;
+        }
+
+        private void AddButton_Click(object sender, EventArgs e)
+        {
+            string name = NameTextBox.Text;
+            string recipe = RecipeTextBox.Text;
+
+            if (!string.IsNullOrEmpty(name))
+            {
+                Dish dish = new Dish(name, recipe, null); //null is only temporary
+                MainForm.RefreshDishes();
+                this.Close();
+            }
         }
     }
 }

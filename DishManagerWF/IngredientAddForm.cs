@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DishManagerLibrary;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,9 +13,21 @@ namespace DishManagerWF
 {
     public partial class IngredientAddForm : Form
     {
-        public IngredientAddForm()
+        private MainWindow MainForm;
+        public IngredientAddForm(MainWindow form)
         {
             InitializeComponent();
+            this.MainForm = form;
+        }
+
+        private void AddButton_Click(object sender, EventArgs e)
+        {
+            string name = NameTextBox.Text;
+            if (!string.IsNullOrEmpty(name)) { 
+                Ingredient newIngredient = new Ingredient(name);
+                MainForm.RefreshIngredients();
+                this.Close();
+            }
         }
     }
 }
