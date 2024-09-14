@@ -35,6 +35,7 @@
             IngredientLabel = new Label();
             AddLabel = new Label();
             AddButton = new Button();
+            AddIngredientToDish = new Button();
             SuspendLayout();
             // 
             // NameTextBox
@@ -97,12 +98,23 @@
             AddButton.UseVisualStyleBackColor = true;
             AddButton.Click += AddButton_Click;
             // 
+            // AddIngredientToDish
+            // 
+            AddIngredientToDish.Location = new Point(121, 207);
+            AddIngredientToDish.Name = "AddIngredientToDish";
+            AddIngredientToDish.Size = new Size(143, 23);
+            AddIngredientToDish.TabIndex = 7;
+            AddIngredientToDish.Text = "Search Ingredients";
+            AddIngredientToDish.UseVisualStyleBackColor = true;
+            AddIngredientToDish.Click += AddIngredientToDish_Click;
+            // 
             // DishAddForm
             // 
             AccessibleName = "";
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(519, 311);
+            Controls.Add(AddIngredientToDish);
             Controls.Add(AddButton);
             Controls.Add(AddLabel);
             Controls.Add(IngredientLabel);
@@ -125,5 +137,6 @@
         private Label IngredientLabel;
         private Label AddLabel;
         private Button AddButton;
+        private Button AddIngredientToDish;
     }
 }

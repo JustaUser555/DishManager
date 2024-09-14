@@ -1,5 +1,6 @@
 using DishManagerLibrary;
 using System.Windows.Forms;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace DishManagerWF
 {
@@ -43,7 +44,7 @@ namespace DishManagerWF
                     Int32 selectedRowCount = DataGridDishes.Rows.GetRowCount(DataGridViewElementStates.Selected);
                     if (selectedRowCount <= 0)
                     {
-                        MessageBox.Show("No rows selected!");
+                        MessageBox.Show("No rows selected!", "Error");
                     }
                     else if (selectedRowCount == 1)
                     {
@@ -51,32 +52,35 @@ namespace DishManagerWF
                         object bindingElement = DataGridDishes.Rows[selectedRow].DataBoundItem;
                         if (bindingElement != null)
                         {
-                            Dish? dishToRemove = bindingElement as Dish;
-                            if (dishToRemove != null)
+                            DialogResult dialogResult = MessageBox.Show("Are you sure you want to delete this dish?", "Delete Dish", MessageBoxButtons.YesNo);
+                            if (dialogResult == DialogResult.Yes)
                             {
-                                bool returnValue = Dish.RemoveDish(dishToRemove);
-                                if(returnValue == true)
+                                try
                                 {
-                                    MessageBox.Show("The dish has been succesfully deleted.");    
+                                    Dish dishToRemove = Dish.DishList[selectedRow];
+                                    if (dishToRemove != null) {
+                                        bool returnValue = Dish.RemoveDish(dishToRemove);
+                                        if (returnValue == false)
+                                        {
+                                            MessageBox.Show("An internal error occured during the deletion process, the dish has probably not been deleted.", "Error");
+                                        }
+                                        DishView.InitializeDishList();
+                                        RefreshDishes();
+                                    }
                                 }
-                                else
+                                catch (Exception)
                                 {
-                                    MessageBox.Show("An internal error occured during the deletion process, the dish has probably not been deleted.");
+                                    MessageBox.Show("An internal error occured during the deletion process, the dish has probably not been deleted.", "Error");
                                 }
-                                RefreshDishes();
-                            }
-                            else
-                            {
-                                MessageBox.Show("The data binding object could not be cast to the expected type.");
                             }
                         } else
                         {
-                            MessageBox.Show("The DataBoundItem is null.");
+                            MessageBox.Show("The DataBoundItem is null.", "Error");
                         }
                     }
                     else
                     {
-                        MessageBox.Show("Too many rows selected, you can select only one row at once.");
+                        MessageBox.Show("Too many rows selected, you can select only one row at once.", "Error");
                     }
                 }
                 else if (selectedTab == IngredientsTabPage)
@@ -84,7 +88,7 @@ namespace DishManagerWF
                     Int32 selectedRowCount = DataGridIngredients.Rows.GetRowCount(DataGridViewElementStates.Selected);
                     if (selectedRowCount <= 0)
                     {
-                        MessageBox.Show("No rows selected!");
+                        MessageBox.Show("No rows selected!", "Error");
                     }
                     else if (selectedRowCount == 1)
                     {
@@ -95,31 +99,44 @@ namespace DishManagerWF
                             Ingredient? ingredientToRemove = bindingElement as Ingredient;
                             if (ingredientToRemove != null)
                             {
-                                bool returnValue = Ingredient.RemoveIngredient(ingredientToRemove);
-                                if (returnValue == true)
+                                DialogResult dialogResult = MessageBox.Show("Are you sure you want to delete this ingredient? Note that this will remove the ingredient from all dishes that contain it.", "Delete Ingredient", MessageBoxButtons.YesNo);
+                                if(dialogResult == DialogResult.Yes)
                                 {
-                                    MessageBox.Show("The ingredient has been succesfully deleted.");
+                                    DeleteDishDependencies(ingredientToRemove);
+                                    bool returnValue = Ingredient.RemoveIngredient(ingredientToRemove);
+                                    if (returnValue == false)
+                                    {
+                                        MessageBox.Show("An internal error occured during the deletion process, the ingredient has probably not been deleted.", "Error");
+                                    }
+                                    RefreshIngredients();
+                                    RefreshDishes();
                                 }
-                                else
-                                {
-                                    MessageBox.Show("An internal error occured during the deletion process, the ingredient has probably not been deleted.");
-                                }
-                                RefreshIngredients();
                             }
                             else
                             {
-                                MessageBox.Show("The data binding object could not be cast to the expected type.");
+                                MessageBox.Show("The data binding object could not be cast to the expected type.", "Error");
                             }
                         }
                         else
                         {
-                            MessageBox.Show("The DataBoundItem is null.");
+                            MessageBox.Show("The DataBoundItem is null.", "Error");
                         }
                     }
                     else
                     {
-                        MessageBox.Show("Too many rows selected, you can select only one at once.");
+                        MessageBox.Show("Too many rows selected, you can select only one row at once.", "Error");
                     }
+                }
+            }
+        }
+
+        private void DeleteDishDependencies(Ingredient ingredientToRemove)
+        {
+            foreach (Dish dish in Dish.DishList)
+            {
+                if (dish.Dependencies != null && dish.Dependencies.Contains(ingredientToRemove))
+                {
+                    dish.Dependencies.Remove(ingredientToRemove);
                 }
             }
         }
@@ -142,7 +159,6 @@ namespace DishManagerWF
 
         public void RefreshIngredients()
         {
-
             DataGridIngredients.DataSource = null;
             DataGridIngredients.DataSource = Ingredient.IngredientList;
             DataGridIngredients.Refresh();
@@ -150,8 +166,9 @@ namespace DishManagerWF
 
         public void RefreshDishes()
         {
+            DishView.InitializeDishList();
             DataGridDishes.DataSource = null;
-            DataGridDishes.DataSource = Dish.DishList;
+            DataGridDishes.DataSource = DishView.DishList;
             DataGridDishes.Refresh();
         }
     }

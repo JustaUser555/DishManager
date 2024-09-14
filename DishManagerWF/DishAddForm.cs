@@ -14,6 +14,9 @@ namespace DishManagerWF
     public partial class DishAddForm : Form
     {
         private MainWindow MainForm;
+
+        public List<Ingredient>? Ingredients;
+
         public DishAddForm(MainWindow form)
         {
             InitializeComponent();
@@ -27,10 +30,17 @@ namespace DishManagerWF
 
             if (!string.IsNullOrEmpty(name))
             {
-                Dish dish = new Dish(name, recipe, null); //null is only temporary
+                Dish dish = new Dish(name, recipe, Ingredients);
+                DishView.InitializeDishList();
                 MainForm.RefreshDishes();
                 this.Close();
             }
+        }
+
+        private void AddIngredientToDish_Click(object sender, EventArgs e)
+        {
+            IngredientToDishAddForm form = new IngredientToDishAddForm(this);
+            form.ShowDialog();
         }
     }
 }
