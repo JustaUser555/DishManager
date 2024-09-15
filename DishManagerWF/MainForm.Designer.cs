@@ -44,6 +44,7 @@
             AddButton = new Button();
             DeleteButton = new Button();
             RefreshButton = new Button();
+            ChangeButton = new Button();
             tabControl.SuspendLayout();
             DishTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)DataGridDishes).BeginInit();
@@ -185,7 +186,7 @@
             // RefreshButton
             // 
             RefreshButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            RefreshButton.Location = new Point(174, 418);
+            RefreshButton.Location = new Point(255, 418);
             RefreshButton.Name = "RefreshButton";
             RefreshButton.Size = new Size(75, 23);
             RefreshButton.TabIndex = 4;
@@ -193,11 +194,22 @@
             RefreshButton.UseVisualStyleBackColor = true;
             RefreshButton.Click += RefreshButton_Click;
             // 
+            // ChangeButton
+            // 
+            ChangeButton.Location = new Point(174, 418);
+            ChangeButton.Name = "ChangeButton";
+            ChangeButton.Size = new Size(75, 23);
+            ChangeButton.TabIndex = 5;
+            ChangeButton.Text = "Change";
+            ChangeButton.UseVisualStyleBackColor = true;
+            ChangeButton.Click += ChangeButton_Click;
+            // 
             // MainWindow
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(ChangeButton);
             Controls.Add(RefreshButton);
             Controls.Add(DeleteButton);
             Controls.Add(AddButton);
@@ -232,5 +244,6 @@
         private DataGridViewTextBoxColumn DishNameColumn;
         private DataGridViewTextBoxColumn DishRecipeColumn;
         private DataGridViewTextBoxColumn DishIngredientsColumn;
+        private Button ChangeButton;
     }
 }
