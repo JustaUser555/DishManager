@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DishManagerLibrary\DishManagerLibrary.csproj" />
     <ProjectReference Include="..\DishManager\DishManagerLibrary.csproj" />
   </ItemGroup>
 
