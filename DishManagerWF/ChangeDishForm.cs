@@ -37,5 +37,11 @@ namespace DishManagerWF
             MainForm.RefreshDishes();
             this.Close();
         }
+
+        private void ChangeIngredientToDish_Click(object sender, EventArgs e)
+        {
+            IngredientToDishChangeForm ingredientToDishChangeForm = new IngredientToDishChangeForm(dish, MainForm);
+            ingredientToDishChangeForm.ShowDialog();
+        }
     }
 }

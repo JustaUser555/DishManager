@@ -67,7 +67,9 @@
             Controls.Add(SaveChangesButton);
             Controls.Add(NameTextBox);
             Controls.Add(NameLabel);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
             Name = "ChangeIngredientForm";
+            StartPosition = FormStartPosition.CenterParent;
             Text = "ChangeIngredientForm";
             ResumeLayout(false);
             PerformLayout();

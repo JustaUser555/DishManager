@@ -87,7 +87,9 @@
             ClientSize = new Size(519, 311);
             Controls.Add(AddIngredientButton);
             Controls.Add(AddIngredientDataGridView);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
             Name = "IngredientToDishAddForm";
+            StartPosition = FormStartPosition.CenterParent;
             Text = "IngredientToDishAddForm";
             ((System.ComponentModel.ISupportInitialize)AddIngredientDataGridView).EndInit();
             ((System.ComponentModel.ISupportInitialize)ingredientBindingSource).EndInit();

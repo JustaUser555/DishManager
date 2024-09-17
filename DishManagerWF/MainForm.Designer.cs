@@ -32,9 +32,6 @@
             tabControl = new TabControl();
             DishTabPage = new TabPage();
             DataGridDishes = new DataGridView();
-            DishNameColumn = new DataGridViewTextBoxColumn();
-            DishRecipeColumn = new DataGridViewTextBoxColumn();
-            DishIngredientsColumn = new DataGridViewTextBoxColumn();
             dishViewBindingSource = new BindingSource(components);
             IngredientsTabPage = new TabPage();
             DataGridIngredients = new DataGridView();
@@ -45,6 +42,9 @@
             DeleteButton = new Button();
             RefreshButton = new Button();
             ChangeButton = new Button();
+            DishNameColumn = new DataGridViewTextBoxColumn();
+            DishRecipeColumn = new DataGridViewTextBoxColumn();
+            DishIngredientsColumn = new DataGridViewTextBoxColumn();
             tabControl.SuspendLayout();
             DishTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)DataGridDishes).BeginInit();
@@ -90,27 +90,6 @@
             DataGridDishes.Name = "DataGridDishes";
             DataGridDishes.Size = new Size(786, 375);
             DataGridDishes.TabIndex = 0;
-            // 
-            // DishNameColumn
-            // 
-            DishNameColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            DishNameColumn.DataPropertyName = "Name";
-            DishNameColumn.HeaderText = "Name";
-            DishNameColumn.Name = "DishNameColumn";
-            // 
-            // DishRecipeColumn
-            // 
-            DishRecipeColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            DishRecipeColumn.DataPropertyName = "Recipe";
-            DishRecipeColumn.HeaderText = "Recipe";
-            DishRecipeColumn.Name = "DishRecipeColumn";
-            // 
-            // DishIngredientsColumn
-            // 
-            DishIngredientsColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            DishIngredientsColumn.DataPropertyName = "IngredientsAsString";
-            DishIngredientsColumn.HeaderText = "Ingredients";
-            DishIngredientsColumn.Name = "DishIngredientsColumn";
             // 
             // dishViewBindingSource
             // 
@@ -196,6 +175,7 @@
             // 
             // ChangeButton
             // 
+            ChangeButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             ChangeButton.Location = new Point(174, 418);
             ChangeButton.Name = "ChangeButton";
             ChangeButton.Size = new Size(75, 23);
@@ -203,6 +183,30 @@
             ChangeButton.Text = "Change";
             ChangeButton.UseVisualStyleBackColor = true;
             ChangeButton.Click += ChangeButton_Click;
+            // 
+            // DishNameColumn
+            // 
+            DishNameColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            DishNameColumn.DataPropertyName = "Name";
+            DishNameColumn.HeaderText = "Name";
+            DishNameColumn.Name = "DishNameColumn";
+            DishNameColumn.ReadOnly = true;
+            // 
+            // DishRecipeColumn
+            // 
+            DishRecipeColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            DishRecipeColumn.DataPropertyName = "Recipe";
+            DishRecipeColumn.HeaderText = "Recipe";
+            DishRecipeColumn.Name = "DishRecipeColumn";
+            DishRecipeColumn.ReadOnly = true;
+            // 
+            // DishIngredientsColumn
+            // 
+            DishIngredientsColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            DishIngredientsColumn.DataPropertyName = "IngredientsAsString";
+            DishIngredientsColumn.HeaderText = "Ingredients";
+            DishIngredientsColumn.Name = "DishIngredientsColumn";
+            DishIngredientsColumn.ReadOnly = true;
             // 
             // MainWindow
             // 
@@ -241,9 +245,9 @@
         private Button AddButton;
         private Button DeleteButton;
         private Button RefreshButton;
+        private Button ChangeButton;
         private DataGridViewTextBoxColumn DishNameColumn;
         private DataGridViewTextBoxColumn DishRecipeColumn;
         private DataGridViewTextBoxColumn DishIngredientsColumn;
-        private Button ChangeButton;
     }
 }

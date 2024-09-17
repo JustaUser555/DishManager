@@ -122,7 +122,9 @@
             Controls.Add(NameLabel);
             Controls.Add(RecipeTextBox);
             Controls.Add(NameTextBox);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
             Name = "DishAddForm";
+            StartPosition = FormStartPosition.CenterParent;
             Text = "Add Dish";
             ResumeLayout(false);
             PerformLayout();

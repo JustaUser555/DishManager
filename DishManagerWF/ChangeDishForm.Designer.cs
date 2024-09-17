@@ -46,6 +46,7 @@
             ChangeIngredientToDish.TabIndex = 23;
             ChangeIngredientToDish.Text = "Change Ingredients";
             ChangeIngredientToDish.UseVisualStyleBackColor = true;
+            ChangeIngredientToDish.Click += ChangeIngredientToDish_Click;
             // 
             // SaveChangesButton
             // 
@@ -120,7 +121,9 @@
             Controls.Add(NameLabel);
             Controls.Add(RecipeTextBox);
             Controls.Add(NameTextBox);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
             Name = "ChangeDishForm";
+            StartPosition = FormStartPosition.CenterParent;
             Text = "ChangeDishForm";
             ResumeLayout(false);
             PerformLayout();

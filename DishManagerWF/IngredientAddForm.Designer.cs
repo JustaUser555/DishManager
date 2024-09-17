@@ -67,7 +67,9 @@
             Controls.Add(AddButton);
             Controls.Add(NameTextBox);
             Controls.Add(NameLabel);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
             Name = "IngredientAddForm";
+            StartPosition = FormStartPosition.CenterParent;
             Text = "IngredientAddForm";
             ResumeLayout(false);
             PerformLayout();
