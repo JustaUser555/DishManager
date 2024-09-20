@@ -42,7 +42,7 @@ namespace DishManagerWF
                         MessageBox.Show("The data binding object is either null or could not be cast to the expected type.");
                     }
                 }
-
+                ingredientsInDish.Sort((x, y) => String.Compare(x.Name, y.Name));
                 parentForm.Ingredients = ingredientsInDish;
             }
             this.Close();

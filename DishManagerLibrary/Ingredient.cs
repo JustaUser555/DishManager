@@ -14,6 +14,7 @@ namespace DishManagerLibrary
         {
             Name = name;
             IngredientList.Add(this);
+            IngredientList.Sort((x, y) => String.Compare(x.Name, y.Name));
         }
 
         public static bool RemoveIngredient(Ingredient ingredient)

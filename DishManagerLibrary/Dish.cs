@@ -19,7 +19,12 @@ namespace DishManagerLibrary
             Name = name;
             Recipe = recipe;
             Dependencies = dependencies;
+            if (Dependencies != null)
+            {
+                Dependencies.Sort((x, y) => String.Compare(x.Name, y.Name));
+            }
             DishList.Add(this);
+            DishList.Sort((x, y) => String.Compare(x.Name, y.Name));
         }
 
         public static bool RemoveDish(Dish dish)

@@ -38,6 +38,8 @@
             AddButton = new Button();
             DeleteButton = new Button();
             SaveChangesButton = new Button();
+            ContainedIngredientsLabel = new Label();
+            AllIngredientsLabel = new Label();
             ((System.ComponentModel.ISupportInitialize)SplitContainer).BeginInit();
             SplitContainer.Panel1.SuspendLayout();
             SplitContainer.Panel2.SuspendLayout();
@@ -49,8 +51,7 @@
             // 
             // SplitContainer
             // 
-            SplitContainer.Dock = DockStyle.Top;
-            SplitContainer.Location = new Point(0, 0);
+            SplitContainer.Location = new Point(12, 30);
             SplitContainer.Name = "SplitContainer";
             // 
             // SplitContainer.Panel1
@@ -60,8 +61,8 @@
             // SplitContainer.Panel2
             // 
             SplitContainer.Panel2.Controls.Add(AllIngredientsDataGridView);
-            SplitContainer.Size = new Size(800, 406);
-            SplitContainer.SplitterDistance = 399;
+            SplitContainer.Size = new Size(776, 377);
+            SplitContainer.SplitterDistance = 386;
             SplitContainer.TabIndex = 0;
             // 
             // ContainedIngredientsDataGridView
@@ -73,7 +74,7 @@
             ContainedIngredientsDataGridView.Dock = DockStyle.Fill;
             ContainedIngredientsDataGridView.Location = new Point(0, 0);
             ContainedIngredientsDataGridView.Name = "ContainedIngredientsDataGridView";
-            ContainedIngredientsDataGridView.Size = new Size(399, 406);
+            ContainedIngredientsDataGridView.Size = new Size(386, 377);
             ContainedIngredientsDataGridView.TabIndex = 0;
             // 
             // nameDataGridViewTextBoxColumn
@@ -97,7 +98,7 @@
             AllIngredientsDataGridView.Dock = DockStyle.Fill;
             AllIngredientsDataGridView.Location = new Point(0, 0);
             AllIngredientsDataGridView.Name = "AllIngredientsDataGridView";
-            AllIngredientsDataGridView.Size = new Size(397, 406);
+            AllIngredientsDataGridView.Size = new Size(386, 377);
             AllIngredientsDataGridView.TabIndex = 0;
             // 
             // nameDataGridViewTextBoxColumn1
@@ -136,12 +137,33 @@
             SaveChangesButton.TabIndex = 3;
             SaveChangesButton.Text = "Save Changes";
             SaveChangesButton.UseVisualStyleBackColor = true;
+            SaveChangesButton.Click += SaveChangesButton_Click;
+            // 
+            // ContainedIngredientsLabel
+            // 
+            ContainedIngredientsLabel.AutoSize = true;
+            ContainedIngredientsLabel.Location = new Point(12, 9);
+            ContainedIngredientsLabel.Name = "ContainedIngredientsLabel";
+            ContainedIngredientsLabel.Size = new Size(124, 15);
+            ContainedIngredientsLabel.TabIndex = 4;
+            ContainedIngredientsLabel.Text = "Contained Ingredients";
+            // 
+            // AllIngredientsLabel
+            // 
+            AllIngredientsLabel.AutoSize = true;
+            AllIngredientsLabel.Location = new Point(403, 9);
+            AllIngredientsLabel.Name = "AllIngredientsLabel";
+            AllIngredientsLabel.Size = new Size(83, 15);
+            AllIngredientsLabel.TabIndex = 5;
+            AllIngredientsLabel.Text = "All Ingredients";
             // 
             // IngredientToDishChangeForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(AllIngredientsLabel);
+            Controls.Add(ContainedIngredientsLabel);
             Controls.Add(SaveChangesButton);
             Controls.Add(DeleteButton);
             Controls.Add(AddButton);
@@ -158,6 +180,7 @@
             ((System.ComponentModel.ISupportInitialize)ingredientBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)AllIngredientsDataGridView).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -171,5 +194,7 @@
         private DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
         private BindingSource ingredientBindingSource;
         private DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn1;
+        private Label ContainedIngredientsLabel;
+        private Label AllIngredientsLabel;
     }
 }

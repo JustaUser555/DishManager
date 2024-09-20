@@ -13,6 +13,8 @@ namespace DishManagerWF
 {
     public partial class ChangeDishForm : Form
     {
+        private List<Ingredient>? NewIngredients;
+
         private MainWindow MainForm;
 
         private Dish dish;
@@ -22,6 +24,14 @@ namespace DishManagerWF
             this.dish = dish;
             MainForm = mainForm;
             LoadData();
+        }
+
+        public void SetNewIngredients(List<Ingredient>? ingredientList)
+        {
+            if (ingredientList != null)
+            {
+                NewIngredients = ingredientList;
+            }
         }
 
         private void LoadData()
@@ -34,14 +44,16 @@ namespace DishManagerWF
         {
             dish.Name = NameTextBox.Text;
             dish.Recipe = RecipeTextBox.Text;
+            dish.Dependencies = NewIngredients;
             MainForm.RefreshDishes();
             this.Close();
         }
 
         private void ChangeIngredientToDish_Click(object sender, EventArgs e)
         {
-            IngredientToDishChangeForm ingredientToDishChangeForm = new IngredientToDishChangeForm(dish, MainForm);
+            IngredientToDishChangeForm ingredientToDishChangeForm = new IngredientToDishChangeForm(dish, MainForm, this);
             ingredientToDishChangeForm.ShowDialog();
         }
+
     }
 }
