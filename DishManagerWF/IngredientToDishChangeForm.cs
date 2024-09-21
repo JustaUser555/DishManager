@@ -55,7 +55,10 @@ namespace DishManagerWF
                 {
                     foreach (Ingredient ingredient in ingredients)
                     {
-                        NewIngredients.Add(ingredient);
+                        if(AddIngredient(ingredient) == false)
+                        {
+                            MessageBox.Show("Ingredient(s) cannot be added. No duplicates allowed.", "Error");
+                        }
                     }
                     NewIngredients.Sort((x, y) => String.Compare(x.Name, y.Name));
                 } else
@@ -131,6 +134,16 @@ namespace DishManagerWF
             }
 
             return ingredientList;
+        }
+
+        private bool AddIngredient(Ingredient ingredient)
+        {
+            if(NewIngredients != null && NewIngredients.Any(ingredientInList => String.Compare(ingredientInList.Name, ingredient.Name) == 0))
+            {
+                return false;
+            } 
+            NewIngredients!.Add(ingredient);
+            return true;
         }
     }
 }

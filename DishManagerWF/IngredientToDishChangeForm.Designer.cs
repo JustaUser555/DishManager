@@ -169,9 +169,12 @@
             Controls.Add(AddButton);
             Controls.Add(SplitContainer);
             FormBorderStyle = FormBorderStyle.FixedDialog;
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "IngredientToDishChangeForm";
+            ShowIcon = false;
             StartPosition = FormStartPosition.CenterParent;
-            Text = "IngredientToDishChangeForm";
+            Text = "Change Ingredients Of Dish";
             SplitContainer.Panel1.ResumeLayout(false);
             SplitContainer.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)SplitContainer).EndInit();

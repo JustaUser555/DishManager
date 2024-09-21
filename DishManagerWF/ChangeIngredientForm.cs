@@ -32,7 +32,11 @@ namespace DishManagerWF
 
         private void SaveChangesButton_Click(object sender, EventArgs e)
         {
-            ingredient.Name = NameTextBox.Text;
+            if(ingredient.SetName(NameTextBox.Text) == false)
+            {
+                MessageBox.Show("Name not allowed, already taken.", "Error");
+                return;
+            }
             MainForm.RefreshIngredients();
             this.Close();
         }

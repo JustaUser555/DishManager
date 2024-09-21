@@ -122,9 +122,12 @@
             Controls.Add(RecipeTextBox);
             Controls.Add(NameTextBox);
             FormBorderStyle = FormBorderStyle.FixedDialog;
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "ChangeDishForm";
+            ShowIcon = false;
             StartPosition = FormStartPosition.CenterParent;
-            Text = "ChangeDishForm";
+            Text = "Change Dish";
             ResumeLayout(false);
             PerformLayout();
         }

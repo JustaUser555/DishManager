@@ -30,10 +30,10 @@
         {
             components = new System.ComponentModel.Container();
             AddIngredientDataGridView = new DataGridView();
+            nameDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             ingredientBindingSource = new BindingSource(components);
             AddIngredientButton = new Button();
             ingredientBindingSource1 = new BindingSource(components);
-            nameDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)AddIngredientDataGridView).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ingredientBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ingredientBindingSource1).BeginInit();
@@ -54,6 +54,14 @@
             AddIngredientDataGridView.Size = new Size(519, 270);
             AddIngredientDataGridView.TabIndex = 0;
             // 
+            // nameDataGridViewTextBoxColumn
+            // 
+            nameDataGridViewTextBoxColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
+            nameDataGridViewTextBoxColumn.HeaderText = "Name";
+            nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
+            nameDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
             // ingredientBindingSource
             // 
             ingredientBindingSource.DataSource = typeof(DishManagerLibrary.Ingredient);
@@ -72,14 +80,6 @@
             // 
             ingredientBindingSource1.DataSource = typeof(DishManagerLibrary.Ingredient);
             // 
-            // nameDataGridViewTextBoxColumn
-            // 
-            nameDataGridViewTextBoxColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
-            nameDataGridViewTextBoxColumn.HeaderText = "Name";
-            nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
-            nameDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
             // IngredientToDishAddForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -88,9 +88,12 @@
             Controls.Add(AddIngredientButton);
             Controls.Add(AddIngredientDataGridView);
             FormBorderStyle = FormBorderStyle.FixedDialog;
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "IngredientToDishAddForm";
+            ShowIcon = false;
             StartPosition = FormStartPosition.CenterParent;
-            Text = "IngredientToDishAddForm";
+            Text = "Add Ingredient To Dish";
             ((System.ComponentModel.ISupportInitialize)AddIngredientDataGridView).EndInit();
             ((System.ComponentModel.ISupportInitialize)ingredientBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)ingredientBindingSource1).EndInit();

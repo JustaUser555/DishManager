@@ -68,9 +68,12 @@
             Controls.Add(NameTextBox);
             Controls.Add(NameLabel);
             FormBorderStyle = FormBorderStyle.FixedDialog;
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "ChangeIngredientForm";
+            ShowIcon = false;
             StartPosition = FormStartPosition.CenterParent;
-            Text = "ChangeIngredientForm";
+            Text = "Change Ingredient";
             ResumeLayout(false);
             PerformLayout();
         }

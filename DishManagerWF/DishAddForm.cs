@@ -30,7 +30,11 @@ namespace DishManagerWF
 
             if (!string.IsNullOrEmpty(name))
             {
-                Dish dish = new Dish(name, recipe, Ingredients);
+                if(Dish.CreateDish(name, recipe, Ingredients) == false)
+                {
+                    MessageBox.Show("Name not allowed, already taken.", "Error");
+                    return;
+                }
                 DishView.InitializeDishList();
                 MainForm.RefreshDishes();
                 this.Close();

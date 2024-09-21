@@ -24,7 +24,11 @@ namespace DishManagerWF
         {
             string name = NameTextBox.Text;
             if (!string.IsNullOrEmpty(name)) { 
-                Ingredient newIngredient = new Ingredient(name);
+                if(Ingredient.CreateIngredient(name) == false)
+                {
+                    MessageBox.Show("Name not allowed, already taken.", "Error");
+                    return;
+                }
                 MainForm.RefreshIngredients();
                 this.Close();
             }

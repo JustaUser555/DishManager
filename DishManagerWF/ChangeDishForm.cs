@@ -22,6 +22,7 @@ namespace DishManagerWF
         {
             InitializeComponent();
             this.dish = dish;
+            NewIngredients = dish.Dependencies;
             MainForm = mainForm;
             LoadData();
         }
@@ -42,9 +43,17 @@ namespace DishManagerWF
 
         private void SaveChangesButton_Click(object sender, EventArgs e)
         {
-            dish.Name = NameTextBox.Text;
+            if(dish.SetName(NameTextBox.Text) == false)
+            {
+                MessageBox.Show("Name not allowed, already taken.", "Error");
+                return;
+            } 
             dish.Recipe = RecipeTextBox.Text;
-            dish.Dependencies = NewIngredients;
+            if (dish.SetDependencies(NewIngredients) == false)
+            {
+                MessageBox.Show("Ingredient(s) cannot be added. No duplicates allowed.", "Error");
+                return;
+            }
             MainForm.RefreshDishes();
             this.Close();
         }
