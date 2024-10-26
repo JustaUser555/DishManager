@@ -60,7 +60,8 @@ namespace DishManagerWF
             if (selectedTab == DishTabPage)
             {
                 selectedRowCount = DataGridDishes.Rows.GetRowCount(DataGridViewElementStates.Selected);
-            } else if (selectedTab == IngredientsTabPage)
+            }
+            else if (selectedTab == IngredientsTabPage)
             {
                 selectedRowCount = DataGridIngredients.Rows.GetRowCount(DataGridViewElementStates.Selected);
             }
@@ -197,17 +198,20 @@ namespace DishManagerWF
             object bindingElement = DataGridDishes.Rows[selectedRow].DataBoundItem;
             if (bindingElement != null)
             {
-                try
+                DishView? dish = bindingElement as DishView;
+                if (dish != null)
                 {
-                    Dish dish = Dish.DishList[selectedRow];
-                    if (dish != null)
+                    for (int i = 0; i < DishView.DishList.Count; i++)
                     {
-                        return dish;
+                        if (dish == DishView.DishList[i])
+                        {
+                            return Dish.DishList[i];
+                        }
                     }
                 }
-                catch (Exception)
+                else
                 {
-                    MessageBox.Show("An internal error occured during the deletion process, the dish has probably not been deleted.", "Error");
+                    MessageBox.Show("The data binding object could not be cast to the expected type.", "Error");
                 }
             }
             else
@@ -238,6 +242,61 @@ namespace DishManagerWF
                 MessageBox.Show("The DataBoundItem is null.", "Error");
             }
             return null;
+        }
+
+        private void SearchBox_TextChanged(object sender, EventArgs e)
+        {
+            string? name = SearchBox.Text;
+            if (string.IsNullOrEmpty(name))
+            {
+                RefreshDishes();
+                RefreshIngredients();
+                return;
+            }
+            TabPage? selectedTab = tabControl.SelectedTab;
+            if(selectedTab != null)
+            {
+                if(selectedTab == DishTabPage)
+                {
+                    List<DishView> dishList = new List<DishView>();
+                    foreach (DishView dish in DishView.DishList)
+                    {
+                        if (dish.Name == name)
+                        {
+                            dishList.Add(dish);
+                            break;
+                        }
+                    }
+                    DataGridDishes_BindLocalList(dishList);
+
+                } else if(selectedTab == IngredientsTabPage)
+                {
+                    List<Ingredient> ingredientList = new List<Ingredient>();
+                    foreach (Ingredient ingredient in Ingredient.IngredientList)
+                    {
+                        if (ingredient.Name == name)
+                        {
+                            ingredientList.Add(ingredient);
+                            break;
+                        }
+                    }
+                    DataGridIngredients_BindLocalList(ingredientList);
+                }
+            }
+        }
+
+        private void DataGridDishes_BindLocalList(List<DishView> dishList)
+        {
+            DataGridDishes.DataSource = null;
+            DataGridDishes.DataSource = dishList;
+            DataGridDishes.Refresh();
+        }
+
+        private void DataGridIngredients_BindLocalList(List<Ingredient> ingredientList)
+        {
+            DataGridIngredients.DataSource = null;
+            DataGridIngredients.DataSource = ingredientList;
+            DataGridIngredients.Refresh();
         }
     }
 }

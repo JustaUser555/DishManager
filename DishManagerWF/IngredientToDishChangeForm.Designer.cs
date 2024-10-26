@@ -40,6 +40,8 @@
             SaveChangesButton = new Button();
             ContainedIngredientsLabel = new Label();
             AllIngredientsLabel = new Label();
+            ContainedIngredientsSearchBox = new TextBox();
+            AllIngredientsSearchBox = new TextBox();
             ((System.ComponentModel.ISupportInitialize)SplitContainer).BeginInit();
             SplitContainer.Panel1.SuspendLayout();
             SplitContainer.Panel2.SuspendLayout();
@@ -157,11 +159,29 @@
             AllIngredientsLabel.TabIndex = 5;
             AllIngredientsLabel.Text = "All Ingredients";
             // 
+            // ContainedIngredientsSearchBox
+            // 
+            ContainedIngredientsSearchBox.Location = new Point(237, 6);
+            ContainedIngredientsSearchBox.Name = "ContainedIngredientsSearchBox";
+            ContainedIngredientsSearchBox.Size = new Size(161, 23);
+            ContainedIngredientsSearchBox.TabIndex = 9;
+            ContainedIngredientsSearchBox.TextChanged += ContainedIngredientsSearchBox_TextChanged;
+            // 
+            // AllIngredientsSearchBox
+            // 
+            AllIngredientsSearchBox.Location = new Point(627, 6);
+            AllIngredientsSearchBox.Name = "AllIngredientsSearchBox";
+            AllIngredientsSearchBox.Size = new Size(161, 23);
+            AllIngredientsSearchBox.TabIndex = 10;
+            AllIngredientsSearchBox.TextChanged += AllIngredientsSearchBox_TextChanged;
+            // 
             // IngredientToDishChangeForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(AllIngredientsSearchBox);
+            Controls.Add(ContainedIngredientsSearchBox);
             Controls.Add(AllIngredientsLabel);
             Controls.Add(ContainedIngredientsLabel);
             Controls.Add(SaveChangesButton);
@@ -199,5 +219,7 @@
         private DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn1;
         private Label ContainedIngredientsLabel;
         private Label AllIngredientsLabel;
+        private TextBox ContainedIngredientsSearchBox;
+        private TextBox AllIngredientsSearchBox;
     }
 }

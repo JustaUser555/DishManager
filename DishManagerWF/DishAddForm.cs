@@ -30,7 +30,7 @@ namespace DishManagerWF
 
             if (!string.IsNullOrEmpty(name))
             {
-                if(Dish.CreateDish(name, recipe, Ingredients) == false)
+                if(Dish.CreateDish(name, recipe, Ingredients) == null)
                 {
                     MessageBox.Show("Name not allowed, already taken.", "Error");
                     return;
@@ -41,9 +41,17 @@ namespace DishManagerWF
             }
         }
 
+        public void SetIngredients(List<Ingredient>? ingredientList)
+        {
+            if (ingredientList != null)
+            {
+                Ingredients = ingredientList;
+            }
+        }
+
         private void AddIngredientToDish_Click(object sender, EventArgs e)
         {
-            IngredientToDishAddForm form = new IngredientToDishAddForm(this);
+            IngredientToDishAddForm form = new IngredientToDishAddForm(this, MainForm);
             form.ShowDialog();
         }
     }

@@ -17,16 +17,16 @@ namespace DishManagerLibrary
             IngredientList.Sort((x, y) => String.Compare(x.Name, y.Name));
         }
 
-        public static bool CreateIngredient(string name)
+        public static Ingredient? CreateIngredient(string name)
         {
             if (IngredientList.Any(ingredient => String.Compare(ingredient.Name, name) == 0))
             {
-                return false;
+                return null;
             }
             else
             {
                 Ingredient ingredient = new Ingredient(name);
-                return true;
+                return ingredient;
             }
         }
 

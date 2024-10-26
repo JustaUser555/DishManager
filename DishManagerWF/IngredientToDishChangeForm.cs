@@ -28,22 +28,15 @@ namespace DishManagerWF
             MainForm = mainForm;
             CallerForm = callerForm;
             NewIngredients = dish.Dependencies;
-            FillAllIngredientsGrid();
-            FillContainedIngredientsGrid();
+            BindDataGridView(ContainedIngredientsDataGridView, NewIngredients);
+            BindDataGridView(AllIngredientsDataGridView, Ingredient.IngredientList);
         }
 
-        private void FillContainedIngredientsGrid()
+        private void BindDataGridView(DataGridView dataGridView, List<Ingredient>? ingredients)
         {
-            ContainedIngredientsDataGridView.DataSource = null;
-            ContainedIngredientsDataGridView.DataSource = NewIngredients;
-            ContainedIngredientsDataGridView.Refresh();
-        }
-
-        private void FillAllIngredientsGrid()
-        {
-            AllIngredientsDataGridView.DataSource = null;
-            AllIngredientsDataGridView.DataSource = Ingredient.IngredientList;
-            ContainedIngredientsDataGridView.Refresh();
+            dataGridView.DataSource = null;
+            dataGridView.DataSource = ingredients;
+            dataGridView.Refresh();
         }
 
         private void AddButton_Click(object sender, EventArgs e)
@@ -55,17 +48,18 @@ namespace DishManagerWF
                 {
                     foreach (Ingredient ingredient in ingredients)
                     {
-                        if(AddIngredient(ingredient) == false)
+                        if (AddIngredient(ingredient) == false)
                         {
                             MessageBox.Show("Ingredient(s) cannot be added. No duplicates allowed.", "Error");
                         }
                     }
                     NewIngredients.Sort((x, y) => String.Compare(x.Name, y.Name));
-                } else
+                }
+                else
                 {
                     NewIngredients = ingredients;
                 }
-                FillContainedIngredientsGrid();
+                BindDataGridView(ContainedIngredientsDataGridView, NewIngredients);
             }
         }
 
@@ -80,7 +74,7 @@ namespace DishManagerWF
                     {
                         NewIngredients.Remove(ingredient);
                     }
-                    FillContainedIngredientsGrid();
+                    BindDataGridView(ContainedIngredientsDataGridView, NewIngredients);
                 }
             }
         }
@@ -138,12 +132,53 @@ namespace DishManagerWF
 
         private bool AddIngredient(Ingredient ingredient)
         {
-            if(NewIngredients != null && NewIngredients.Any(ingredientInList => String.Compare(ingredientInList.Name, ingredient.Name) == 0))
+            if (NewIngredients == null || NewIngredients.Any(ingredientInList => String.Compare(ingredientInList.Name, ingredient.Name) == 0))
             {
                 return false;
-            } 
-            NewIngredients!.Add(ingredient);
+            }
+            NewIngredients.Add(ingredient);
             return true;
+        }
+
+        private void ContainedIngredientsSearchBox_TextChanged(object sender, EventArgs e)
+        {
+            string? name = ContainedIngredientsSearchBox.Text;
+            if (string.IsNullOrEmpty(name))
+            {
+                BindDataGridView(ContainedIngredientsDataGridView, NewIngredients);
+                return;
+            }
+            if (NewIngredients == null) return;
+            List<Ingredient> temp = new List<Ingredient>();
+            foreach (Ingredient ingredient in NewIngredients)
+            {
+                if (ingredient.Name == name)
+                {
+                    temp.Add(ingredient);
+                    break;
+                }
+            }
+            BindDataGridView(ContainedIngredientsDataGridView, temp);
+        }
+        
+        private void AllIngredientsSearchBox_TextChanged(object sender, EventArgs e)
+        {
+            string? name = AllIngredientsSearchBox.Text;
+            if (string.IsNullOrEmpty(name))
+            {
+                BindDataGridView(AllIngredientsDataGridView, Ingredient.IngredientList);
+                return;
+            }
+            List<Ingredient> temp = new List<Ingredient>();
+            foreach (Ingredient ingredient in Ingredient.IngredientList)
+            {
+                if (ingredient.Name == name)
+                {
+                    temp.Add(ingredient);
+                    break;
+                }
+            }
+            BindDataGridView(AllIngredientsDataGridView, temp);
         }
     }
 }

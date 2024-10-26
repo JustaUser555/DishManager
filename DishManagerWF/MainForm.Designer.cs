@@ -45,6 +45,7 @@
             DeleteButton = new Button();
             RefreshButton = new Button();
             ChangeButton = new Button();
+            SearchBox = new TextBox();
             tabControl.SuspendLayout();
             DishTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)DataGridDishes).BeginInit();
@@ -148,6 +149,7 @@
             IngredientsNameColumn.DataPropertyName = "Name";
             IngredientsNameColumn.HeaderText = "Name";
             IngredientsNameColumn.Name = "IngredientsNameColumn";
+            IngredientsNameColumn.ReadOnly = true;
             // 
             // ingredientBindingSource
             // 
@@ -208,11 +210,21 @@
             ChangeButton.UseVisualStyleBackColor = true;
             ChangeButton.Click += ChangeButton_Click;
             // 
+            // SearchBox
+            // 
+            SearchBox.BackColor = SystemColors.Window;
+            SearchBox.Location = new Point(336, 419);
+            SearchBox.Name = "SearchBox";
+            SearchBox.Size = new Size(200, 23);
+            SearchBox.TabIndex = 1;
+            SearchBox.TextChanged += SearchBox_TextChanged;
+            // 
             // MainWindow
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(SearchBox);
             Controls.Add(ChangeButton);
             Controls.Add(RefreshButton);
             Controls.Add(DeleteButton);
@@ -232,6 +244,7 @@
             ((System.ComponentModel.ISupportInitialize)DataGridIngredients).EndInit();
             ((System.ComponentModel.ISupportInitialize)ingredientBindingSource).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -252,5 +265,6 @@
         private DataGridViewTextBoxColumn DishNameColumn;
         private DataGridViewTextBoxColumn DishRecipeColumn;
         private DataGridViewTextBoxColumn DishIngredientsColumn;
+        private TextBox SearchBox;
     }
 }

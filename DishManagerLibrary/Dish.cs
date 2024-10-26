@@ -28,15 +28,15 @@ namespace DishManagerLibrary
             DishList.Sort((x, y) => String.Compare(x.Name, y.Name));
         }
 
-        public static bool CreateDish(string name, string? recipe, List<Ingredient>? dependencies)
+        public static Dish? CreateDish(string name, string? recipe, List<Ingredient>? dependencies)
         {
             if (DishList.Any(dish => String.Compare(dish.Name, name) == 0))
             {
-                return false;
+                return null;
             } else
             {
                 Dish dish = new Dish(name, recipe, dependencies);
-                return true;
+                return dish;
             }
         }
 
