@@ -236,6 +236,8 @@
             Name = "MainWindow";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "DishManager";
+            FormClosing += MainWindow_FormClosing;
+            Load += MainWindow_Load;
             tabControl.ResumeLayout(false);
             DishTabPage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)DataGridDishes).EndInit();

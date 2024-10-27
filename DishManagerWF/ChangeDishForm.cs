@@ -13,16 +13,17 @@ namespace DishManagerWF
 {
     public partial class ChangeDishForm : Form
     {
-        private List<Ingredient>? NewIngredients;
+        public List<Ingredient>? NewIngredients { get; private set; } = null;
 
         private MainWindow MainForm;
 
         private Dish dish;
+
         public ChangeDishForm(Dish dish, MainWindow mainForm)
         {
             InitializeComponent();
             this.dish = dish;
-            NewIngredients = dish.Dependencies;
+            NewIngredients = (dish.Dependencies != null) ? dish.Dependencies.ToList() : null;
             MainForm = mainForm;
             LoadData();
         }
@@ -31,7 +32,12 @@ namespace DishManagerWF
         {
             if (ingredientList != null)
             {
-                NewIngredients = ingredientList;
+                if (ingredientList.Count == 0) NewIngredients = null;
+                else NewIngredients = ingredientList.ToList();
+            }
+            else
+            {
+                NewIngredients = null;
             }
         }
 
@@ -55,6 +61,7 @@ namespace DishManagerWF
                 return;
             }
             MainForm.RefreshDishes();
+            MainForm.SetSaveChangesFlagTrue();
             this.Close();
         }
 

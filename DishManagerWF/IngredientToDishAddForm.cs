@@ -25,6 +25,7 @@ namespace DishManagerWF
             InitializeComponent();
             parentForm = form;
             MainForm = mainForm;
+            NewIngredients = (parentForm.Ingredients != null) ? parentForm.Ingredients.ToList() : null;
             BindDataGridView(AllIngredientsDataGridView, Ingredient.IngredientList);
             BindDataGridView(ContainedIngredientsDataGridView, NewIngredients);
         }
@@ -34,14 +35,6 @@ namespace DishManagerWF
             dataGridView.DataSource = null;
             dataGridView.DataSource = ingredients;
             dataGridView.Refresh();
-        }
-
-        public void SetNewIngredients(List<Ingredient>? ingredientList)
-        {
-            if (ingredientList != null)
-            {
-                NewIngredients = ingredientList;
-            }
         }
 
         private Ingredient? GetIngredient(int selectedRow, DataGridView dataGridView)
@@ -138,7 +131,8 @@ namespace DishManagerWF
                 }
                 else
                 {
-                    NewIngredients = ingredients;
+                    NewIngredients = ingredients.ToList();
+                    NewIngredients.Sort((x, y) => String.Compare(x.Name, y.Name));
                 }
                 BindDataGridView(ContainedIngredientsDataGridView, NewIngredients);
             }

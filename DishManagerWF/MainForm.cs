@@ -1,20 +1,43 @@
 using DishManagerLibrary;
 using System.Diagnostics.Eventing.Reader;
+using System.Drawing.Text;
 using System.Windows.Forms;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using Newtonsoft.Json;
+using System.IO;
+using System.Reflection.Metadata.Ecma335;
 
 namespace DishManagerWF
 {
     public partial class MainWindow : Form
     {
+        private const string Folder = "DishManagerWF";
+
+        private bool UnsavedChanges = false;
+
         public MainWindow()
         {
             InitializeComponent();
         }
 
+        private void MainWindow_Load(object sender, EventArgs e)
+        {
+            //LoadData();
+        }
+
         private void ButtonToSaveChanges_Click(object sender, EventArgs e)
         {
-            //make a function that reads and writes to a file using the json extension
+            if (!SaveData())
+            {
+                MessageBox.Show("An Error occured while saving. The changes could not be saved.", "Error");
+                return;
+            }
+            UnsavedChanges = false;
+        }
+
+        public void SetSaveChangesFlagTrue()
+        {
+            UnsavedChanges = true;
         }
 
         private void AddButton_Click(object sender, EventArgs e)
@@ -43,6 +66,7 @@ namespace DishManagerWF
                 if (CheckSelectedRow(DishTabPage) == 1)
                 {
                     DeleteDish();
+                    SetSaveChangesFlagTrue();
                 }
             }
             else if (selectedTab != null && selectedTab == IngredientsTabPage)
@@ -50,6 +74,7 @@ namespace DishManagerWF
                 if (CheckSelectedRow(IngredientsTabPage) == 1)
                 {
                     DeleteIngredient();
+                    SetSaveChangesFlagTrue();
                 }
             }
         }
@@ -254,9 +279,9 @@ namespace DishManagerWF
                 return;
             }
             TabPage? selectedTab = tabControl.SelectedTab;
-            if(selectedTab != null)
+            if (selectedTab != null)
             {
-                if(selectedTab == DishTabPage)
+                if (selectedTab == DishTabPage)
                 {
                     List<DishView> dishList = new List<DishView>();
                     foreach (DishView dish in DishView.DishList)
@@ -269,7 +294,8 @@ namespace DishManagerWF
                     }
                     DataGridDishes_BindLocalList(dishList);
 
-                } else if(selectedTab == IngredientsTabPage)
+                }
+                else if (selectedTab == IngredientsTabPage)
                 {
                     List<Ingredient> ingredientList = new List<Ingredient>();
                     foreach (Ingredient ingredient in Ingredient.IngredientList)
@@ -297,6 +323,70 @@ namespace DishManagerWF
             DataGridIngredients.DataSource = null;
             DataGridIngredients.DataSource = ingredientList;
             DataGridIngredients.Refresh();
+        }
+
+        private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (UnsavedChanges)
+            {
+                DialogResult result = MessageBox.Show("There are unsaved changes. Would you like to save before closing?", "Unsaved Changes", MessageBoxButtons.YesNoCancel);
+
+
+                switch(result)
+                {
+                    case DialogResult.Yes:
+                        bool returnValue = SaveData();
+                        if (!returnValue)
+                        {
+                            MessageBox.Show("An error occured while saving. The changes could not be saved.", "Error");
+                            e.Cancel = true;
+                        }
+                        break;
+                    case DialogResult.No: break;
+                    case DialogResult.Cancel: e.Cancel = true; break;
+                }
+            }
+        }
+
+        private bool SaveData()
+        {
+            string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            string specialFolder = Path.Combine(appDataPath, Folder);
+
+            if (!Directory.Exists(specialFolder))
+            {
+                Directory.CreateDirectory(specialFolder);
+            }
+
+            string file1 = Path.Combine(specialFolder, "Ingredients.json");
+            string file2 = Path.Combine(specialFolder, "Dishes.json");
+
+            string? ingredients = SerializeJson(Ingredient.IngredientList);
+            string? dishes = SerializeJson(Dish.DishList);
+
+            if(dishes == null || ingredients == null)
+            {
+                return false;
+            }
+
+            File.WriteAllText(file1, ingredients);
+            File.WriteAllText(file2, dishes);
+
+            return true;
+        }
+
+        private string? SerializeJson<T>(T data)
+        {
+            try
+            {
+                string serializedObject = JsonConvert.SerializeObject(data, Formatting.Indented);
+                return serializedObject;
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error");
+                return null;
+            }
         }
     }
 }

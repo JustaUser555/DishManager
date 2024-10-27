@@ -15,7 +15,7 @@ namespace DishManagerWF
     {
         private MainWindow MainForm;
 
-        public List<Ingredient>? Ingredients;
+        public List<Ingredient>? Ingredients = null;
 
         public DishAddForm(MainWindow form)
         {
@@ -37,6 +37,7 @@ namespace DishManagerWF
                 }
                 DishView.InitializeDishList();
                 MainForm.RefreshDishes();
+                MainForm.SetSaveChangesFlagTrue();
                 this.Close();
             }
         }
@@ -45,7 +46,12 @@ namespace DishManagerWF
         {
             if (ingredientList != null)
             {
-                Ingredients = ingredientList;
+                if (ingredientList.Count == 0) Ingredients = null;
+                else Ingredients = ingredientList.ToList();
+            }
+            else
+            {
+                Ingredients = null;
             }
         }
 

@@ -17,7 +17,7 @@ namespace DishManagerWF
 
         private ChangeDishForm CallerForm;
 
-        private List<Ingredient>? NewIngredients;
+        private List<Ingredient>? Ingredients;
 
         private Dish dish;
 
@@ -27,8 +27,8 @@ namespace DishManagerWF
             this.dish = dish;
             MainForm = mainForm;
             CallerForm = callerForm;
-            NewIngredients = dish.Dependencies;
-            BindDataGridView(ContainedIngredientsDataGridView, NewIngredients);
+            Ingredients = (CallerForm.NewIngredients != null) ? CallerForm.NewIngredients.ToList() : null;
+            BindDataGridView(ContainedIngredientsDataGridView, Ingredients);
             BindDataGridView(AllIngredientsDataGridView, Ingredient.IngredientList);
         }
 
@@ -44,7 +44,7 @@ namespace DishManagerWF
             List<Ingredient>? ingredients = GetIngredientList(AllIngredientsDataGridView);
             if (ingredients != null && ingredients.Count > 0)
             {
-                if (NewIngredients != null)
+                if (Ingredients != null)
                 {
                     foreach (Ingredient ingredient in ingredients)
                     {
@@ -53,13 +53,14 @@ namespace DishManagerWF
                             MessageBox.Show("Ingredient(s) cannot be added. No duplicates allowed.", "Error");
                         }
                     }
-                    NewIngredients.Sort((x, y) => String.Compare(x.Name, y.Name));
+                    Ingredients.Sort((x, y) => String.Compare(x.Name, y.Name));
                 }
                 else
                 {
-                    NewIngredients = ingredients;
+                    Ingredients = ingredients.ToList();
+                    Ingredients.Sort((x, y) => String.Compare(x.Name, y.Name));
                 }
-                BindDataGridView(ContainedIngredientsDataGridView, NewIngredients);
+                BindDataGridView(ContainedIngredientsDataGridView, Ingredients);
             }
         }
 
@@ -68,20 +69,20 @@ namespace DishManagerWF
             List<Ingredient>? ingredients = GetIngredientList(ContainedIngredientsDataGridView);
             if (ingredients != null && ingredients.Count > 0)
             {
-                if (NewIngredients != null)
+                if (Ingredients != null)
                 {
                     foreach (Ingredient ingredient in ingredients)
                     {
-                        NewIngredients.Remove(ingredient);
+                        Ingredients.Remove(ingredient);
                     }
-                    BindDataGridView(ContainedIngredientsDataGridView, NewIngredients);
+                    BindDataGridView(ContainedIngredientsDataGridView, Ingredients);
                 }
             }
         }
 
         private void SaveChangesButton_Click(object sender, EventArgs e)
         {
-            CallerForm.SetNewIngredients(NewIngredients);
+            CallerForm.SetNewIngredients(Ingredients);
             this.Close();
         }
 
@@ -132,11 +133,11 @@ namespace DishManagerWF
 
         private bool AddIngredient(Ingredient ingredient)
         {
-            if (NewIngredients == null || NewIngredients.Any(ingredientInList => String.Compare(ingredientInList.Name, ingredient.Name) == 0))
+            if (Ingredients == null || Ingredients.Any(ingredientInList => String.Compare(ingredientInList.Name, ingredient.Name) == 0))
             {
                 return false;
             }
-            NewIngredients.Add(ingredient);
+            Ingredients.Add(ingredient);
             return true;
         }
 
@@ -145,12 +146,12 @@ namespace DishManagerWF
             string? name = ContainedIngredientsSearchBox.Text;
             if (string.IsNullOrEmpty(name))
             {
-                BindDataGridView(ContainedIngredientsDataGridView, NewIngredients);
+                BindDataGridView(ContainedIngredientsDataGridView, Ingredients);
                 return;
             }
-            if (NewIngredients == null) return;
+            if (Ingredients == null) return;
             List<Ingredient> temp = new List<Ingredient>();
-            foreach (Ingredient ingredient in NewIngredients)
+            foreach (Ingredient ingredient in Ingredients)
             {
                 if (ingredient.Name == name)
                 {
