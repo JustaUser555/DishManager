@@ -23,13 +23,19 @@ namespace DishManagerWF
         private void AddButton_Click(object sender, EventArgs e)
         {
             string name = NameTextBox.Text;
-            if (!string.IsNullOrEmpty(name)) { 
-                if(Ingredient.CreateIngredient(name) == null)
+            if (!string.IsNullOrEmpty(name)) {
+                try
                 {
-                    MessageBox.Show("Name not allowed, already taken.", "Error");
+                    Ingredient ingredient = new Ingredient(name);
+                }
+                catch (InvalidOperationException ex)
+                {
+                    MessageBox.Show(ex.Message, "Error");
                     return;
                 }
+
                 MainForm.RefreshIngredients();
+                MainForm.SetSaveChangesFlagTrue();
                 this.Close();
             }
         }

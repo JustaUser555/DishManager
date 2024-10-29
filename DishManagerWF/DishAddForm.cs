@@ -15,7 +15,7 @@ namespace DishManagerWF
     {
         private MainWindow MainForm;
 
-        public List<Ingredient>? Ingredients = null;
+        public List<Ingredient>? Ingredients { get; private set; } = null;
 
         public DishAddForm(MainWindow form)
         {
@@ -30,12 +30,16 @@ namespace DishManagerWF
 
             if (!string.IsNullOrEmpty(name))
             {
-                if(Dish.CreateDish(name, recipe, Ingredients) == null)
+                try
                 {
-                    MessageBox.Show("Name not allowed, already taken.", "Error");
+                    Dish dish = new Dish(name, recipe, Ingredients);
+                }
+                catch (InvalidOperationException ex)
+                {
+                    MessageBox.Show(ex.Message, "Error");
                     return;
                 }
-                DishView.InitializeDishList();
+                
                 MainForm.RefreshDishes();
                 MainForm.SetSaveChangesFlagTrue();
                 this.Close();

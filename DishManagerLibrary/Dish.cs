@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace DishManagerLibrary
@@ -15,8 +16,12 @@ namespace DishManagerLibrary
         public string? Recipe { get; set; }
         public List<Ingredient>? Dependencies { get; private set; } = new List<Ingredient>();
 
-        private Dish(string name, string? recipe, List<Ingredient>? dependencies)
+        public Dish(string name, string? recipe, List<Ingredient>? dependencies)
         {
+            if (DishList.Any(dish => String.Compare(dish.Name, name) == 0))
+            {
+                throw new InvalidOperationException($"A dish with the name '{name}' alredy exists.");
+            }
             Name = name;
             Recipe = recipe;
             Dependencies = dependencies;
@@ -26,18 +31,6 @@ namespace DishManagerLibrary
             }
             DishList.Add(this);
             DishList.Sort((x, y) => String.Compare(x.Name, y.Name));
-        }
-
-        public static Dish? CreateDish(string name, string? recipe, List<Ingredient>? dependencies)
-        {
-            if (DishList.Any(dish => String.Compare(dish.Name, name) == 0))
-            {
-                return null;
-            } else
-            {
-                Dish dish = new Dish(name, recipe, dependencies);
-                return dish;
-            }
         }
 
         public static bool RemoveDish(Dish dish)
@@ -79,7 +72,7 @@ namespace DishManagerLibrary
 
                 if(duplicateNames.Count == 0)
                 {
-                    Dependencies = dependencies;
+                    Dependencies = dependencies.ToList();
                     return true;
                 } else
                 {
@@ -87,7 +80,7 @@ namespace DishManagerLibrary
                 }
             } else
             {
-                Dependencies = dependencies;
+                Dependencies = null;
                 return true;
             }
         }

@@ -38,6 +38,7 @@ namespace DishManagerWF
                 return;
             }
             MainForm.RefreshIngredients();
+            MainForm.RefreshDishes();
             this.Close();
         }
     }

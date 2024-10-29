@@ -11,6 +11,12 @@ namespace DishManagerWF
 {
     public partial class MainWindow : Form
     {
+        private JsonSerializerSettings JsonSettings = new JsonSerializerSettings
+        {
+            PreserveReferencesHandling = PreserveReferencesHandling.Objects,
+            Formatting = Formatting.Indented
+        };
+
         private const string Folder = "DishManagerWF";
 
         private bool UnsavedChanges = false;
@@ -22,7 +28,9 @@ namespace DishManagerWF
 
         private void MainWindow_Load(object sender, EventArgs e)
         {
-            //LoadData();
+            if (LoadData() == null) MessageBox.Show("NULL");
+            RefreshDishes();
+            RefreshIngredients();
         }
 
         private void ButtonToSaveChanges_Click(object sender, EventArgs e)
@@ -176,7 +184,10 @@ namespace DishManagerWF
         public void RefreshIngredients()
         {
             DataGridIngredients.DataSource = null;
-            DataGridIngredients.DataSource = Ingredient.IngredientList;
+            if (Ingredient.IngredientList.Count > 0)
+            {
+                DataGridIngredients.DataSource = Ingredient.IngredientList;
+            }
             DataGridIngredients.Refresh();
         }
 
@@ -184,7 +195,10 @@ namespace DishManagerWF
         {
             DishView.InitializeDishList();
             DataGridDishes.DataSource = null;
-            DataGridDishes.DataSource = DishView.DishList;
+            if (Dish.DishList.Count > 0)
+            {
+                DataGridDishes.DataSource = DishView.DishList;
+            }
             DataGridDishes.Refresh();
         }
 
@@ -283,6 +297,7 @@ namespace DishManagerWF
             {
                 if (selectedTab == DishTabPage)
                 {
+                    if(DishView.DishList.Count == 0) return;
                     List<DishView> dishList = new List<DishView>();
                     foreach (DishView dish in DishView.DishList)
                     {
@@ -297,6 +312,7 @@ namespace DishManagerWF
                 }
                 else if (selectedTab == IngredientsTabPage)
                 {
+                    if(Ingredient.IngredientList.Count == 0) return;
                     List<Ingredient> ingredientList = new List<Ingredient>();
                     foreach (Ingredient ingredient in Ingredient.IngredientList)
                     {
@@ -353,39 +369,110 @@ namespace DishManagerWF
             string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             string specialFolder = Path.Combine(appDataPath, Folder);
 
-            if (!Directory.Exists(specialFolder))
+            try
             {
-                Directory.CreateDirectory(specialFolder);
+                if (!Directory.Exists(specialFolder))
+                {
+                    Directory.CreateDirectory(specialFolder);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Unexpected error: {ex.Message}", "Error");
+                return false;
             }
 
-            string file1 = Path.Combine(specialFolder, "Ingredients.json");
-            string file2 = Path.Combine(specialFolder, "Dishes.json");
+            CompleteData completeData = new CompleteData();
+            string file = Path.Combine(specialFolder, "Data.json");
+            string? data = SerializeJson(completeData);
 
-            string? ingredients = SerializeJson(Ingredient.IngredientList);
-            string? dishes = SerializeJson(Dish.DishList);
-
-            if(dishes == null || ingredients == null)
+            if(data == null)
             {
                 return false;
             }
 
-            File.WriteAllText(file1, ingredients);
-            File.WriteAllText(file2, dishes);
-
+            try
+            {
+                File.WriteAllText(file, data);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                MessageBox.Show($"Permission denied to write to file {file}: {ex.Message}", "Error");
+                return false;
+            }
+            catch (IOException ex)
+            {
+                MessageBox.Show($"File {file} is being used by another process: {ex.Message}", "Error");
+                return false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Unexpected error writing to file {file}: {ex.Message}", "Error");
+                return false;
+            }
             return true;
+        }
+
+        private CompleteData? LoadData()
+        {
+            string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            string specialFolder = Path.Combine(appDataPath, Folder);
+
+            if (!Directory.Exists(specialFolder))
+            {
+                return null;
+            }
+
+            string file = Path.Combine(specialFolder, "Data.json");
+
+            if (File.Exists(file))
+            {
+                try
+                {
+                    string jsonData = File.ReadAllText(file);
+                    return DeserializeJson<CompleteData>(jsonData);
+                }
+                catch (UnauthorizedAccessException ex)
+                {
+                    MessageBox.Show($"Permission denied to read file {file}: {ex.Message}", "Error");
+                }
+                catch (IOException ex)
+                {
+                    MessageBox.Show($"File {file} is being used by another process: {ex.Message}", "Error");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Unexpected error: {ex.Message}", "Error");
+                }
+            }
+            return null;
         }
 
         private string? SerializeJson<T>(T data)
         {
             try
             {
-                string serializedObject = JsonConvert.SerializeObject(data, Formatting.Indented);
+                string serializedObject = JsonConvert.SerializeObject(data, JsonSettings);
                 return serializedObject;
             }
             catch(Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error");
                 return null;
+            }
+        }
+
+        private T? DeserializeJson<T>(string json)
+        {
+            try
+            {
+                var objects = JsonConvert.DeserializeObject<T>(json, JsonSettings);
+                return objects;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error");
+                return default;
             }
         }
     }

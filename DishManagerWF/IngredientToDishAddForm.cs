@@ -26,7 +26,13 @@ namespace DishManagerWF
             parentForm = form;
             MainForm = mainForm;
             NewIngredients = (parentForm.Ingredients != null) ? parentForm.Ingredients.ToList() : null;
-            BindDataGridView(AllIngredientsDataGridView, Ingredient.IngredientList);
+            if (Ingredient.IngredientList.Count != 0)
+            {
+                BindDataGridView(AllIngredientsDataGridView, Ingredient.IngredientList);
+            } else
+            {
+                BindDataGridView(AllIngredientsDataGridView, null);
+            }
             BindDataGridView(ContainedIngredientsDataGridView, NewIngredients);
         }
 
@@ -146,7 +152,7 @@ namespace DishManagerWF
                 BindDataGridView(ContainedIngredientsDataGridView, NewIngredients);
                 return;
             }
-            if (NewIngredients == null) return;
+            if (NewIngredients == null || NewIngredients.Count == 0) return;
             List<Ingredient> temp = new List<Ingredient>();
             foreach (Ingredient ingredient in NewIngredients)
             {
@@ -164,9 +170,17 @@ namespace DishManagerWF
             string? name = AllIngredientsSearchBox.Text;
             if (string.IsNullOrEmpty(name))
             {
-                BindDataGridView(AllIngredientsDataGridView, Ingredient.IngredientList);
+                if (Ingredient.IngredientList.Count != 0)
+                {
+                    BindDataGridView(AllIngredientsDataGridView, Ingredient.IngredientList);
+                }
+                else
+                {
+                    BindDataGridView(AllIngredientsDataGridView, null);
+                }
                 return;
             }
+            if (Ingredient.IngredientList.Count == 0) return;
             List<Ingredient> temp = new List<Ingredient>();
             foreach (Ingredient ingredient in Ingredient.IngredientList)
             {

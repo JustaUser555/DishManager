@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace DishManagerLibrary
@@ -10,24 +11,15 @@ namespace DishManagerLibrary
     {
         public static List<Ingredient> IngredientList { get; } = new List<Ingredient>();
         public string Name { get; private set; }
-        private Ingredient(string name)
-        {
-            Name = name;
-            IngredientList.Add(this);
-            IngredientList.Sort((x, y) => String.Compare(x.Name, y.Name));
-        }
-
-        public static Ingredient? CreateIngredient(string name)
+        public Ingredient(string name)
         {
             if (IngredientList.Any(ingredient => String.Compare(ingredient.Name, name) == 0))
             {
-                return null;
+                throw new InvalidOperationException($"An ingredient with the name '{name}' alredy exists.");
             }
-            else
-            {
-                Ingredient ingredient = new Ingredient(name);
-                return ingredient;
-            }
+            Name = name;
+            IngredientList.Add(this);
+            IngredientList.Sort((x, y) => String.Compare(x.Name, y.Name));
         }
 
         public static bool RemoveIngredient(Ingredient ingredient)
