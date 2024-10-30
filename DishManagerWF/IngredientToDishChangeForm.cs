@@ -157,15 +157,7 @@ namespace DishManagerWF
                 return;
             }
             if (Ingredients == null || Ingredients.Count == 0) return;
-            List<Ingredient> temp = new List<Ingredient>();
-            foreach (Ingredient ingredient in Ingredients)
-            {
-                if (ingredient.Name == name)
-                {
-                    temp.Add(ingredient);
-                    break;
-                }
-            }
+            List<Ingredient> temp = Search(Ingredients, name);
             BindDataGridView(ContainedIngredientsDataGridView, temp);
         }
         
@@ -185,16 +177,21 @@ namespace DishManagerWF
                 return;
             }
             if(Ingredient.IngredientList.Count == 0) return;
+            List<Ingredient> temp = Search(Ingredient.IngredientList, name);
+            BindDataGridView(AllIngredientsDataGridView, temp);
+        }
+
+        private List<Ingredient> Search(List<Ingredient> listToSearch, string name)
+        {
             List<Ingredient> temp = new List<Ingredient>();
-            foreach (Ingredient ingredient in Ingredient.IngredientList)
+            foreach (Ingredient ingredient in listToSearch)
             {
-                if (ingredient.Name == name)
+                if (ingredient.Name.StartsWith(name, StringComparison.OrdinalIgnoreCase))
                 {
                     temp.Add(ingredient);
-                    break;
                 }
             }
-            BindDataGridView(AllIngredientsDataGridView, temp);
+            return temp;
         }
     }
 }

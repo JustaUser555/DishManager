@@ -6,6 +6,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 using Newtonsoft.Json;
 using System.IO;
 using System.Reflection.Metadata.Ecma335;
+using System.Xml.Linq;
 
 namespace DishManagerWF
 {
@@ -298,46 +299,56 @@ namespace DishManagerWF
                 if (selectedTab == DishTabPage)
                 {
                     if(DishView.DishList.Count == 0) return;
-                    List<DishView> dishList = new List<DishView>();
-                    foreach (DishView dish in DishView.DishList)
-                    {
-                        if (dish.Name == name)
-                        {
-                            dishList.Add(dish);
-                            break;
-                        }
-                    }
+                    List<DishView> dishList = SearchDish(name);
                     DataGridDishes_BindLocalList(dishList);
 
                 }
                 else if (selectedTab == IngredientsTabPage)
                 {
                     if(Ingredient.IngredientList.Count == 0) return;
-                    List<Ingredient> ingredientList = new List<Ingredient>();
-                    foreach (Ingredient ingredient in Ingredient.IngredientList)
-                    {
-                        if (ingredient.Name == name)
-                        {
-                            ingredientList.Add(ingredient);
-                            break;
-                        }
-                    }
+                    List<Ingredient> ingredientList = SearchIngredient(name);
                     DataGridIngredients_BindLocalList(ingredientList);
                 }
             }
         }
 
-        private void DataGridDishes_BindLocalList(List<DishView> dishList)
+        private List<Ingredient> SearchIngredient(string name)
+        {
+            List<Ingredient> ingredientList = new List<Ingredient>();
+            foreach (Ingredient ingredient in Ingredient.IngredientList)
+            {
+                if (ingredient.Name.StartsWith(name, StringComparison.OrdinalIgnoreCase))
+                {
+                    ingredientList.Add(ingredient);
+                }
+            }
+            return ingredientList;
+        }
+
+        private List<DishView> SearchDish(string name)
+        {
+            List<DishView> dishList = new List<DishView>();
+            foreach (DishView dish in DishView.DishList)
+            {
+                if (dish.Name != null && dish.Name.StartsWith(name, StringComparison.OrdinalIgnoreCase))
+                {
+                    dishList.Add(dish);
+                }
+            }
+            return dishList;
+        }
+
+        private void DataGridDishes_BindLocalList(List<DishView> list)
         {
             DataGridDishes.DataSource = null;
-            DataGridDishes.DataSource = dishList;
+            DataGridDishes.DataSource = list;
             DataGridDishes.Refresh();
         }
 
-        private void DataGridIngredients_BindLocalList(List<Ingredient> ingredientList)
+        private void DataGridIngredients_BindLocalList(List<Ingredient> list)
         {
             DataGridIngredients.DataSource = null;
-            DataGridIngredients.DataSource = ingredientList;
+            DataGridIngredients.DataSource = list;
             DataGridIngredients.Refresh();
         }
 
