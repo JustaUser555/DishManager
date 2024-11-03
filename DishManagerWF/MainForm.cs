@@ -29,7 +29,7 @@ namespace DishManagerWF
 
         private void MainWindow_Load(object sender, EventArgs e)
         {
-            if (LoadData() == null) MessageBox.Show("NULL");
+            LoadData();
             RefreshDishes();
             RefreshIngredients();
         }
@@ -162,6 +162,7 @@ namespace DishManagerWF
                 if (dish.Dependencies != null && dish.Dependencies.Contains(ingredientToRemove))
                 {
                     dish.Dependencies.Remove(ingredientToRemove);
+                    if (dish.Dependencies.Count == 0) dish.SetDependencies(null);
                 }
             }
         }
